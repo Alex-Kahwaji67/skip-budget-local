@@ -1,0 +1,3 @@
+source_id,course_id,course,title,start,end,timezone,unit_labels,delivery_mode,notes
+example-001,data,Data Analysis,"Workshop, week 1",2027-01-12 09:00,2027-01-12 10:00,Europe/Madrid,Workshop 1,in-person,"Fictional example; adjust dates and map to your course"
+example-002,design,Design Studio,Example double block,2027-01-13 10:00,2027-01-13 12:00,Europe/Madrid,Workshop 2|Workshop 3,in-person,Fictional example

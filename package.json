@@ -1,0 +1,33 @@
+{
+  "name": "skip-budget-local",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5188 --strictPort",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5188 --strictPort",
+    "test": "vitest run --maxWorkers=1",
+    "typecheck": "tsc --noEmit",
+    "test:browser": "playwright test",
+    "format": "prettier --write src tests docs *.ts *.json *.html *.md .github/workflows/*.yml",
+    "format:check": "prettier --check src tests docs *.ts *.json *.html *.md .github/workflows/*.yml"
+  },
+  "dependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2",
+    "vite": "8.2.2",
+    "vitest": "5.0.0",
+    "@playwright/test": "1.63.0",
+    "prettier": "3.9.9"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
