@@ -6,6 +6,40 @@ test.beforeEach(async ({ page }) => {
   await page.clock.setFixedTime(new Date("2026-09-28T12:00:00Z"));
 });
 
+test("async attendance is explicitly recorded independently of completion", async ({
+  page,
+}) => {
+  await example(page);
+  await page.getByRole("button", { name: "Completion", exact: true }).click();
+  const dialog = page.getByRole("dialog", {
+    name: "Asynchronous class editor",
+  });
+  await dialog
+    .getByLabel("Attendance for Unit 1", { exact: true })
+    .selectOption("absent");
+  await dialog
+    .getByRole("combobox", { name: "Completion", exact: true })
+    .selectOption("complete");
+  await dialog.getByRole("button", { name: "Save class", exact: true }).click();
+  await expect(dialog).toBeHidden();
+  const saved = await savedState(page);
+  expect(
+    saved.attendance.find((record: any) => record.sessionId === "reading")
+      .status,
+  ).toBe("absent");
+  expect(
+    saved.sessions.find((session: any) => session.id === "reading")
+      .asyncCompletion,
+  ).toBe("complete");
+  await page.reload();
+  await page.getByRole("button", { name: "Completion", exact: true }).click();
+  await expect(
+    page
+      .getByRole("dialog")
+      .getByLabel("Attendance for Unit 1", { exact: true }),
+  ).toHaveValue("absent");
+});
+
 async function savedState(page: Page) {
   return page.evaluate(
     () =>
@@ -228,7 +262,6 @@ test("aborted local writes retain the candidate; retry saves once; a second tab 
   await expect(second.getByRole("alert")).toContainText(
     "already open in another tab",
   );
-  await second.close();
   await page.evaluate(() => {
     const original = IDBDatabase.prototype.transaction;
     IDBDatabase.prototype.transaction = function (
@@ -267,8 +300,18 @@ test("aborted local writes retain the candidate; retry saves once; a second tab 
   await confirm(page);
   expect(await savedState(page)).toEqual(before);
   await page.close();
-  const reopened = await context.newPage();
-  await reopened.goto("/");
+  await expect
+    .poll(() =>
+      second.evaluate(
+        async () =>
+          (await navigator.locks.query()).held?.some(
+            (lock) => lock.name === "skip-budget-local-editor",
+          ) ?? false,
+      ),
+    )
+    .toBe(false);
+  const reopened = second;
+  await reopened.getByRole("button", { name: "Retry opening planner" }).click();
   await expect(
     reopened.getByRole("heading", { name: "Course attendance ledger" }),
   ).toBeVisible();

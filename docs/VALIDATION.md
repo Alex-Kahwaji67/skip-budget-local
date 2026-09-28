@@ -18,6 +18,8 @@ Tests use fictional data and disposable browser contexts. The production preview
 
 Browser tests fix the clock to September 28, 2026 so tests and documentation captures remain reproducible as real dates pass. The ordinary app generates examples relative to the actual date.
 
+The IE-focused update also tests explicit asynchronous attendance independently of completion, and conservative versus configured exclusion of excused records. Existing backups retain their settings; explicitly recorded asynchronous absences now contribute to projections, and elapsed asynchronous sessions without records remain unknown.
+
 To regenerate the documentation captures on Windows PowerShell:
 
 ```powershell

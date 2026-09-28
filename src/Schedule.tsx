@@ -67,7 +67,7 @@ export function Schedule({
       return false;
     if (attendance === "all") return true;
     const s = state.sessions.find((s) => s.id === e.id);
-    if (!s || s.deliveryMode === "async") return false;
+    if (!s) return false;
     return s.units.some(
       (u) =>
         (state.attendance.find((r) => r.unitId === u.id)?.status ??

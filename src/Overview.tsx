@@ -24,22 +24,33 @@ export function PageHeader({
     <section className="page-heading">
       <div>
         <p className="exchange">
-          <Icon name="plane" /> Local planner
+          <Icon name="plane" /> Free for IE students
         </p>
         <h1>{title}</h1>
         <p>
-          Your timetable <span className="dot">·</span> Europe/Madrid
+          Madrid & Segovia <span className="dot">·</span> Independent student
+          project
+        </p>
+        <p>
+          <a
+            href="https://docs.ie.edu/documents/Attendance_Policy_Bachelor_Programs.pdf"
+            target="_blank"
+            rel="noreferrer"
+          >
+            IE bachelor attendance policy (2026–27)
+          </a>{" "}
+          · Estimates are not travel approval.
         </p>
       </div>
 
       <blockquote>
         <span>“</span>
         <em>
-          A semester abroad is a collection
+          Know the class cost
           <br />
-          of classes, places, and perspectives.
+          before you book the trip.
         </em>
-        <small>Plan well. Make the most of it.</small>
+        <small>Free. Open source. No subscription.</small>
       </blockquote>
     </section>
   );
@@ -48,8 +59,8 @@ export function Coverage({ state }: { state: AppState }) {
   const [open, setOpen] = useState(false);
   const unknown = state.sessions.some(
     (s) =>
-      s.deliveryMode !== "async" &&
-      s.endsAt < Date.now() &&
+      (s.deliveryMode === "async" ? (s.asyncDueAt ?? s.endsAt) : s.endsAt) <
+        Date.now() &&
       s.units.some(
         (u) =>
           !state.attendance.some(

@@ -63,7 +63,7 @@ describe("attendance planning with an explicit clock", () => {
       )?.plannedAbsences,
     ).toBe(1);
   });
-  it("does not treat past plans or asynchronous work as absences", () => {
+  it("does not infer absences from past plans or asynchronous travel conflicts", () => {
     const s = state();
     expect(
       planned(
@@ -81,6 +81,35 @@ describe("attendance planning with an explicit clock", () => {
       getProjection(s, null, now).courses.find((c) => c.courseId === "writing")
         ?.plannedAbsences,
     ).toBe(2);
+  });
+  it("counts explicit async attendance and excludes excused units only by configured policy", () => {
+    const s = state();
+    const asyncSession = s.sessions.find(
+      (session) => session.id === "reading",
+    )!;
+    asyncSession.endsAt = now - 1;
+    asyncSession.asyncDueAt = now + 1;
+    asyncSession.asyncCompletion = "complete";
+    const writing = () =>
+      getProjection(s, null, now).courses.find(
+        (c) => c.courseId === "writing",
+      )!;
+    expect(writing().unknownPastUnits).toBe(0);
+    asyncSession.asyncDueAt = now - 1;
+    expect(writing().unknownPastUnits).toBe(1);
+    s.attendance.push({
+      id: "async-result",
+      sessionId: "reading",
+      unitId: "reading-u1",
+      status: "absent",
+    });
+    expect(writing().actualAbsences).toBe(1);
+    expect(writing().unknownPastUnits).toBe(0);
+    s.attendance.at(-1)!.status = "excused";
+    expect(writing().actualAbsences).toBe(1);
+    s.courses.find((c) => c.id === "writing")!.excusedTreatment = "exclude";
+    expect(writing().actualAbsences).toBe(0);
+    expect(writing().plannedAbsences).toBe(2);
   });
   it("excludes cancelled trips and respects disabled scenarios", () => {
     const s = state();

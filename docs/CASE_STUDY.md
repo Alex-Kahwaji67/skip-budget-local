@@ -2,7 +2,9 @@
 
 ## Problem
 
-Skip Budget began with an exchange-semester problem: comparing travel ideas against attendance requirements and a timetable that was still incomplete. Counting calendar events was insufficient because a double teaching block could represent two attendance units. A planned absence was also different from a recorded absence, and a missing record did not establish attendance.
+Skip Budget began during an exchange semester at IE University in Madrid: comparing travel ideas against attendance requirements and a timetable that was still incomplete. Counting calendar events was insufficient because a double teaching block could represent two attendance units. A planned absence was also different from a recorded absence, and a missing record did not establish attendance.
+
+The intended audience is IE undergraduates, particularly incoming exchange students planning travel alongside coursework. The [IE student guide](IE_STUDENT_GUIDE.md) links the researched policy and explains its limits. The public edition is free and open source because this planning workflow should not require a subscription. That is a product choice, not evidence of adoption or superiority to a paid tool.
 
 A spreadsheet can calculate a remaining allowance. The reason to build a dedicated interface was the repeated workflow around that calculation: importing timetable updates, retaining the identity of individual units, comparing overlapping trips, and checking assessments next to the travel decision.
 

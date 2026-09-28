@@ -2,11 +2,15 @@
 
 [![Checks](https://github.com/Alex-Kahwaji67/skip-budget-local/actions/workflows/checks.yml/badge.svg)](https://github.com/Alex-Kahwaji67/skip-budget-local/actions/workflows/checks.yml)
 
-**An attendance and travel planner that keeps recorded absences, unknown history, and future plans separate.**
+**Free, open-source attendance and travel planning for IE University students.**
 
-Built from a personal exchange-semester planning problem: a trip can overlap several classes, a class can count as two attendance units, and an incomplete calendar cannot tell you that you are free.
+Built from an exchange semester at IE in Madrid: before booking a trip, understand which numbered sessions, assessments, and deadlines it overlaps. One calendar block can contain two attendance units. An incomplete timetable cannot tell you that you are free.
+
+For IE undergraduates and incoming exchange students in Madrid and Segovia. Independent and unaffiliated with IE University. Anyone can use, inspect, or adapt the code under the MIT license. Attendance planning should be available without a subscription.
 
 This is the standalone local edition. No account, backend, API key, or subscription is required. Planner data stays in IndexedDB in your browser; JSON backups move it between devices manually.
+
+**Free software, currently a local setup:** you need Node.js and the instructions below. There is no public one-click hosted app yet. See the [IE attendance and exchange guide](docs/IE_STUDENT_GUIDE.md) for sources, limits, and what to check before booking.
 
 ![Fictional attendance planner](docs/screenshots/overview.png)
 
@@ -41,11 +45,12 @@ See the [walkthrough](docs/WALKTHROUGH.md) and [development case study](docs/CAS
 
 - Course-specific whole-unit attendance thresholds: `total units - ceil(total units × required attendance)`.
 - Partial attendance in multi-unit blocks, unknown past records, conservative excused-absence treatment, and incomplete schedule warnings.
+- Explicit attendance records for asynchronous sessions, separate from your completion checklist. Travelling never automatically marks asynchronous work absent.
 - Confirmed travel, tentative trip comparisons, manual what-if skips, assessment conflicts, and asynchronous deadlines.
 - Reviewed CSV/ICS imports with source identities, explicit course mapping, deduplication, and validation before saving.
 - Validated JSON backup/restore, atomic reset/recovery, and export/retry when a local write fails.
 
-All displayed times use **Europe/Madrid**. This is a deliberately narrow planning tool, not an institutional attendance system. Verify course requirements yourself. The app does not determine official sanctions, exceptions, or whether skipping a class is advisable.
+All displayed times use **Europe/Madrid**, also the timezone for Segovia. New courses and fictional examples start with an editable 80% planning threshold. Example course names and totals are invented, not an IE course catalogue. Verify session totals against your syllabus. The app does not determine official sanctions, approve absences, or guarantee a trip is academically safe.
 
 ## Import a timetable
 

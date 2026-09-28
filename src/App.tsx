@@ -478,7 +478,7 @@ export function App() {
           <button className="brand" onClick={() => go("overview")}>
             <span className="brand-mark">SB</span>
             <span>
-              Skip Budget<small>Local edition</small>
+              Skip Budget<small>For IE students · Free</small>
             </span>
           </button>
           <nav className="primary-nav" aria-label="Main navigation">

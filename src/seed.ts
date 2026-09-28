@@ -46,13 +46,13 @@ export function exampleState(now = Date.now()): AppState {
         id: "design",
         name: "Design Studio",
         totalUnits: 12,
-        requiredAttendanceBps: 7500,
+        requiredAttendanceBps: 8000,
       },
       {
         id: "writing",
         name: "Academic Writing",
         totalUnits: 8,
-        requiredAttendanceBps: 7500,
+        requiredAttendanceBps: 8000,
       },
     ],
     sessions: [

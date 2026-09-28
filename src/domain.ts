@@ -306,13 +306,17 @@ export function getProjection(
         unitsOf(s).forEach((u) => {
           const r = recorded.get(`${s.id}:${u.id}`);
           if (
-            s.deliveryMode !== "async" &&
-            (r?.status === "absent" ||
-              (r?.status === "excused" &&
-                (c.excusedTreatment ?? "unresolved") !== "exclude"))
+            r?.status === "absent" ||
+            (r?.status === "excused" &&
+              (c.excusedTreatment ?? "unresolved") !== "exclude")
           )
             actual++;
-          else if (!r && s.endsAt < now && s.deliveryMode !== "async")
+          else if (
+            !r &&
+            (s.deliveryMode === "async"
+              ? (s.asyncDueAt ?? s.endsAt)
+              : s.endsAt) < now
+          )
             unknown++;
         }),
       );

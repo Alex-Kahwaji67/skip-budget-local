@@ -54,9 +54,12 @@ export function CourseDialog({
   >(course?.excusedTreatment ?? "unresolved");
   const [notes, setNotes] = useState(
     course?.policyNotes ??
-      "Institutional sanction, resit, and exception rules are not verified here.",
+      "IE bachelor 2026–27 planning reference: 80% threshold. Personal travel counts. Only mark an absence Excused after Program Management approval; configure exclusion explicitly. Verify your course totals and current rules.",
   );
-  const [sourceUrl, setSourceUrl] = useState(course?.sourceUrl ?? "");
+  const [sourceUrl, setSourceUrl] = useState(
+    course?.sourceUrl ??
+      "https://docs.ie.edu/documents/Attendance_Policy_Bachelor_Programs.pdf",
+  );
   const [verifiedAt, setVerifiedAt] = useState(course?.verifiedAt ?? "");
   const [formError, setFormError] = useState("");
   const item = course
@@ -513,13 +516,20 @@ export function SessionDialog({
         </>
       }
     >
-      {session && delivery !== "async" && (
+      {session && (
         <section className="attendance-first">
           <h3>Record attendance</h3>
           <p className="drawer-note">
             Each unit shares this block’s time. Changes stay in this draft until
             Save.
           </p>
+          {delivery === "async" && (
+            <p className="drawer-note">
+              At IE, asynchronous sessions count toward attendance. Record the
+              professor's attendance result here; your completion tracker does
+              not establish attendance.
+            </p>
+          )}
           {session.units.map((unit) => {
             const attendance =
               attendanceDraft[unit.id] ??
@@ -545,20 +555,22 @@ export function SessionDialog({
                   }
                   label={`Attendance for ${unit.label}`}
                 />
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={planned}
-                    disabled={!scenario}
-                    onChange={(event) =>
-                      setPlannedDraft((current) => ({
-                        ...current,
-                        [unit.id]: event.target.checked,
-                      }))
-                    }
-                  />{" "}
-                  Planned skip in {scenario?.name ?? "what-if"}
-                </label>
+                {delivery !== "async" && (
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={planned}
+                      disabled={!scenario}
+                      onChange={(event) =>
+                        setPlannedDraft((current) => ({
+                          ...current,
+                          [unit.id]: event.target.checked,
+                        }))
+                      }
+                    />{" "}
+                    Planned skip in {scenario?.name ?? "what-if"}
+                  </label>
+                )}
               </div>
             );
           })}
