@@ -14,6 +14,8 @@ The runnable checks live in the repository; GitHub Actions reports their result 
 
 Tests use fictional data and disposable browser contexts. The production preview is started on loopback port 5189 and stopped by the test runner. Tests do not connect to the private prototype or provider accounts.
 
+`node tests/dev-startup.mjs` also checks development-mode startup and reload on port 5190, guarding against React StrictMode competing with itself for the editor lock.
+
 Browser tests fix the clock to September 28, 2026 so tests and documentation captures remain reproducible as real dates pass. The ordinary app generates examples relative to the actual date.
 
 To regenerate the documentation captures on Windows PowerShell:

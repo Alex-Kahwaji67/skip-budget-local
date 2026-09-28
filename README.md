@@ -62,6 +62,7 @@ npm test
 npm run typecheck
 npm run build
 npx playwright install chromium
+node tests/dev-startup.mjs
 npm run test:browser
 ```
 
